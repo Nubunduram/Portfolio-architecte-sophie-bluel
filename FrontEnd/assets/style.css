@@ -109,6 +109,7 @@ section {
 
 body {
 	line-height: 1;
+	background: #FFFEF8;
 }
 
 ol,
@@ -134,25 +135,44 @@ table {
 	border-spacing: 0;
 }
 
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a,
+button,
+input[type="submit"] {
+	cursor: pointer;
+}
+
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+}
+
+header,
+main {
+	max-width: 1140px;
+	width: 100%;
+	margin: auto;
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px auto;
 }
 
 section {
 	margin: 50px 0
 }
 
-h1 {
+h1>a {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
@@ -161,11 +181,10 @@ h1 {
 	color: #B1663C
 }
 
-h1>span {
+h1>a>span {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	letter-spacing: 0.1em;
-	;
 }
 
 h2 {
@@ -218,7 +237,6 @@ li:hover {
 	margin-bottom: 0.5em;
 }
 
-#portfolio h2,
 .filters-container {
 	text-align: center;
 	margin-bottom: 3rem;
@@ -234,7 +252,6 @@ li:hover {
 	border-radius: 60px;
 	font-family: Syne;
 	font-size: 1rem;
-	cursor: pointer;
 }
 
 button {
@@ -263,39 +280,44 @@ button:hover {
 
 }
 
-#contact {
-	width: 50%;
+#contact,
+#login-page-main {
+	width: 33%;
 	margin: auto;
 }
 
-#contact>* {
+#contact>*,
+#login-page-main>* {
 	text-align: center;
-
 }
 
 #contact h2 {
 	margin-bottom: 20px;
 }
 
-#contact form {
+#contact form,
+#login-page-main form {
 	text-align: left;
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input,
+#login-page-main input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#contact label {
+#contact label,
+#login-page-main label {
 	margin: 2em 0 1em 0;
 }
 
-#contact textarea {
+#contact textarea,
+#login-page-main textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -311,8 +333,57 @@ input[type="submit"] {
 	border-radius: 60px;
 }
 
+input[type="submit"]:hover {
+	background: #0E2F28;
+}
+
 footer nav ul {
+	background-color: #fff;
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	padding: 2em 10%;
+}
+
+/* Log-in Page */
+#login-page-main {
+	flex-grow: 1;
+}
+
+footer {
+	margin-top: auto;
+}
+
+#login-page-main h2 {
+	margin-bottom: 3rem;
+}
+
+#forgoten-link {
+	text-decoration: underline;
+}
+
+#login-link-active-page {
+	font-weight: 600;
+}
+
+/* Editor Mode */
+
+.editor-header {
+	padding: 20px;
+	background: #000;
+	color: #fff;
+}
+
+.editor-header > span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+}
+
+.project-modify-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 3rem;
+	gap: 2rem;
 }

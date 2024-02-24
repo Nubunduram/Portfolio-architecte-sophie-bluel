@@ -15,14 +15,24 @@
 </head>
 
 <body>
+	<!-- In Editor mode: -->
+	<!-- 
+		<div class="editor-header">
+			<span>
+				<svg></svg>
+				Mode édition
+			</span>
+		</div>
+	 -->
 	<header>
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<h1><a href="index.html">Sophie Bluel <span>Architecte d'intérieur</span></a></h1>
 		<nav>
 			<ul>
-				<li>projets</li>
-				<li>contact</li>
-				<li>login</li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				<li><a href="#portfolio">projets</a></li>
+				<li><a href="#contact">contact</a></li>
+				<li><a href="login.html" id="login-logout-link"></a></li>
+				<li><a href="https://www.instagram.com"><img src="./assets/icons/instagram.png" alt="Instagram"></a>
+				</li>
 			</ul>
 		</nav>
 	</header>
@@ -43,7 +53,9 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
+			<div class="project-modify-container">
+				<h2>Mes Projets</h2>
+			</div>
 			<div class="filters-container">
 				<!-- Display Filter Buttons -->
 				<!-- 
@@ -66,7 +78,7 @@
 			<form action="#" method="post">
 				<label for="name">Nom</label>
 				<input type="text" name="name" id="name">
-				<label for="email">Email</label>
+				<label for="email">E-mail</label>
 				<input type="email" name="email" id="email">
 				<label for="message">Message</label>
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
@@ -74,11 +86,10 @@
 			</form>
 		</section>
 	</main>
-
 	<footer>
 		<nav>
 			<ul>
-				<li>Mentions Légales</li>
+				<li><a href="#">Mentions Légales</a></li>
 			</ul>
 		</nav>
 	</footer>
