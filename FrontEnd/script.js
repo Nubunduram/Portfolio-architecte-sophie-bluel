@@ -158,4 +158,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     fetchCategoriesAndDisplayButtons();
+
+
+
+
+
+    // Modale Logic
+
+    const modale = document.getElementById("modale");
+    modale.showModal();
+
 });
