@@ -163,9 +163,23 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-    // Modale Logic
+    // Modal Logic
+    if (token) {
+        const modal = document.getElementById("modal");
+        modal.showModal();
+    }
 
-    const modale = document.getElementById("modale");
-    modale.showModal();
+    // Close the Modal if click outside the box
+    modal.addEventListener("click", e => {
+        const dialogDimensions = modal.getBoundingClientRect()
+        if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+        ) {
+            modal.close()
+        }
+    })
 
 });
