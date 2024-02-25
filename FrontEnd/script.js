@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Check if user is connected & display the right content
     if (token) {
         // User is connected
-
         // Create editorHeader div
         const editorHeader = document.createElement("div");
         editorHeader.className = "editor-header";

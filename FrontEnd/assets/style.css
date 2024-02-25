@@ -385,6 +385,12 @@ footer {
 	align-items: center;
 	margin-bottom: 3rem;
 	gap: 2rem;
+	position: relative;
+}
+
+.project-modify-container > button {
+	position: absolute;
+	right: 29%;
 }
 
 /* modal */
@@ -463,4 +469,20 @@ dialog::backdrop {
 
 .project-modify-container>button:hover {
 	color: #B1663C;
+}
+
+
+
+
+/* UL Links Details */
+.bold {
+	font-weight: 600;
+}
+
+nav > ul > li > a > svg {
+	fill: black;
+}
+
+nav > ul > li > a:hover > svg {
+	fill: #B1663C;
 }
