@@ -136,15 +136,14 @@ table {
 	border-spacing: 0;
 }
 
-a {
-	text-decoration: none;
-	color: inherit;
-}
-
 a,
 button,
 input[type="submit"] {
 	cursor: pointer;
+	text-decoration: none;
+	color: inherit;
+	background: none;
+	border: none;
 }
 
 /** end reset css**/
@@ -255,11 +254,11 @@ li:hover {
 	font-size: 1rem;
 }
 
-button {
+.filters-container button {
 	transition: 0.25s;
 }
 
-button:hover {
+.filters-container button:hover {
 	scale: 1.05;
 }
 
@@ -397,7 +396,7 @@ footer {
 	text-align: center;
 }
 
-.closing-modal-svg-container {
+.closing-modal-button-container {
 	text-align: end;
 }
 
@@ -427,7 +426,7 @@ footer {
 	object-fit: fill;
 }
 
-.modal-img-container>svg{
+.modal-img-container>button>svg {
 	position: absolute;
 	top: 6px;
 	right: 6px;
@@ -446,5 +445,22 @@ input[type="submit"] {
 }
 
 dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.closing-modal-button:hover>svg {
+	fill: #B1663C;
+}
+
+/* Modifier + SVG buttton, hover */
+.project-modify-container>button>svg {
+	fill: black;
+}
+
+.project-modify-container>button:hover>svg {
+	fill: #B1663C;
+}
+
+.project-modify-container>button:hover {
+	color: #B1663C;
 }
