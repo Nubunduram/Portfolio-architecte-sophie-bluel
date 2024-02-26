@@ -230,4 +230,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     })
 
+    const addPicture = document.getElementById("add-picture");
+    const addingModal = document.getElementById("adding-modal");
+
+    addPicture.addEventListener("click", () => {
+        modal.close();
+        addingModal.showModal();
+    })
+
+
+
 });
