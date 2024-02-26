@@ -437,7 +437,19 @@ dialog>p {
 	place-items: center;
 	padding-top: 12px;
 	padding-bottom: 20px;
+	position: relative;
+	height: 169px;
 }
+
+#preview-image {
+	position: absolute;
+	height: 100%;
+}
+
+.hide {
+	display: none;
+}
+
 
 .text-input-container {
 	display: grid;

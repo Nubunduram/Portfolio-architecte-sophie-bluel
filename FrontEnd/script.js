@@ -211,32 +211,113 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Modal
 
     const modal = document.getElementById("modal");
+    const addingModal = document.getElementById("adding-modal");
 
-    const closingModalButton = document.querySelector(".closing-modal-button");
 
-    closingModalButton.addEventListener("click", () => {
-        modal.close();
-    })
-
-    modal.addEventListener("click", e => {
-        const dialogDimensions = modal.getBoundingClientRect()
-        if (
-            e.clientX < dialogDimensions.left ||
-            e.clientX > dialogDimensions.right ||
-            e.clientY < dialogDimensions.top ||
-            e.clientY > dialogDimensions.bottom
-        ) {
-            modal.close()
-        }
-    })
+    const closingModalButtons = document.querySelectorAll(".closing-modal-button");
 
     const addPicture = document.getElementById("add-picture");
-    const addingModal = document.getElementById("adding-modal");
+    const returnButton = document.getElementById("adding-modal-return-button");
 
     addPicture.addEventListener("click", () => {
         modal.close();
         addingModal.showModal();
     })
+
+    returnButton.addEventListener("click", () => {
+        addingModal.close();
+        modal.showModal();
+    })
+
+
+
+    closingModalButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            modal.close();
+            addingModal.close();
+        });
+    });
+
+    function closeOnOutsideClick(modal, event) {
+        const dialogDimensions = modal.getBoundingClientRect();
+        if (
+            event.clientX < dialogDimensions.left ||
+            event.clientX > dialogDimensions.right ||
+            event.clientY < dialogDimensions.top ||
+            event.clientY > dialogDimensions.bottom
+        ) {
+            modal.close();
+        }
+    }
+
+    modal.addEventListener("click", e => {
+        closeOnOutsideClick(modal, e);
+    });
+
+    addingModal.addEventListener("click", e => {
+        closeOnOutsideClick(addingModal, e);
+    });
+
+
+    // IMG preview 
+    // Get the file input element
+    const fileInput = document.getElementById('photo');
+    // Get the preview container element
+    const previewContainer = document.querySelector('.picture-input-container');
+
+    const addPictureButtons = document.querySelectorAll('.to-hide')
+
+    function hideInputButton() {
+        addPictureButtons.forEach(elementToHide => {
+            elementToHide.classList.add('hide');
+        })
+    }
+
+    closingModalButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            modal.close();
+            addingModal.close();
+        });
+    });
+
+    // Create a new img element
+    const previewImage = document.createElement('img');
+    previewImage.id = 'preview-image';
+    previewImage.alt = 'Preview Image';
+
+
+
+    // Add an event listener to the file input
+    fileInput.addEventListener('change', function () {
+        // Check if any file is selected
+        if (fileInput.files.length > 0) {
+            // Append the img element to the preview container
+            hideInputButton();
+            previewContainer.appendChild(previewImage);
+
+            // Get the selected file
+            const selectedFile = fileInput.files[0];
+
+            // Create a FileReader object to read the file
+            const reader = new FileReader();
+
+            // Set up the FileReader onload event to update the preview image
+            reader.onload = function (e) {
+                // Set the source of the preview image to the data URL of the selected file
+                previewImage.src = e.target.result;
+            };
+
+            // Read the selected file as a data URL
+            reader.readAsDataURL(selectedFile);
+        } else {
+            // If no file is selected, you can handle this case (e.g., display a default image)
+            previewImage.src = '#';
+        }
+    });
+
+
+
+
 
 
 
