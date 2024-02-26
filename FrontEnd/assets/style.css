@@ -137,12 +137,16 @@ table {
 }
 
 a,
+button {
+	background: none;
+	cursor: pointer;
+}
+
+a,
 button,
 input[type="submit"] {
-	cursor: pointer;
 	text-decoration: none;
 	color: inherit;
-	background: none;
 	border: none;
 }
 
@@ -326,13 +330,21 @@ input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
 	margin: 2em auto;
 	text-align: center;
 	border-radius: 60px;
 }
 
-input[type="submit"]:hover {
+#add-picture,
+#mail-send-button,
+#connect-button {
+	background-color: #1D6154;
+	cursor: pointer;
+}
+
+#add-picture:hover,
+#mail-send-button:hover,
+#connect-button:hover {
 	background: #0E2F28;
 }
 
@@ -482,7 +494,7 @@ dialog>p {
 /* Hide the "add a file" default button */
 ::file-selector-button {
 	display: none;
-  }  
+}
 
 input[type="file"] {
 	position: absolute;
@@ -496,11 +508,22 @@ input[type="file"] {
 	border-radius: 50px;
 }
 
-#validating-button {
+.validating-button {
 	width: 240px;
+	background-color: #A7A7A7;
+	cursor: default;
 }
 
-.adding-modal-button-container > button:hover {
+.validated-button {
+	background-color: #1D6154;
+	cursor: pointer;
+}
+
+.validated-button:hover {
+	background: #0E2F28;
+}
+
+.adding-modal-button-container>button:hover {
 	fill: #B1663C;
 }
 

@@ -258,6 +258,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         closeOnOutsideClick(addingModal, e);
     });
 
+    const projectCategorySelect = document.getElementById("projectCategory");
+
+    // Add an event listener to the select element to stop event propagation,
+    //  otherwise it closes the modal when click on an option on mozzilla
+    projectCategorySelect.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
 
     // IMG preview 
     // Get the file input element
@@ -266,12 +273,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const previewContainer = document.querySelector('.picture-input-container');
 
     const addPictureButtons = document.querySelectorAll('.to-hide')
-
-    function hideInputButton() {
-        addPictureButtons.forEach(elementToHide => {
-            elementToHide.classList.add('hide');
-        })
-    }
 
     closingModalButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -285,14 +286,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     previewImage.id = 'preview-image';
     previewImage.alt = 'Preview Image';
 
-
-
     // Add an event listener to the file input
     fileInput.addEventListener('change', function () {
         // Check if any file is selected
         if (fileInput.files.length > 0) {
+
+            addPictureButtons.forEach(elementToHide => {
+                elementToHide.classList.add('hide');
+            })
             // Append the img element to the preview container
-            hideInputButton();
             previewContainer.appendChild(previewImage);
 
             // Get the selected file
@@ -315,9 +317,27 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
+    // Change  the validating button if the form is filled or not
+    const modalAddForm = document.getElementById("modal-add-form");
+    const validatingButton = document.getElementById('validating-button');
 
+    modalAddForm.addEventListener("input", function checkForm() {
+        // Get all input and select elements within the form
+        const inputs = document.querySelectorAll('#modal-add-form input, #modal-add-form select');
 
+        // Check if all inputs are filled
+        const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
 
+        // Enable or disable the button based on the input status
+        validatingButton.disabled = !allFilled;
+
+        // Toggle the CSS class based on input status
+        if (allFilled) {
+            validatingButton.classList.add('validated-button');
+        } else {
+            validatingButton.classList.remove('validated-button');
+        }
+    });
 
 
 
