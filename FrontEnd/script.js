@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         closeOnOutsideClick(addingModal, e);
     });
 
-    const projectCategorySelect = document.getElementById("projectCategory");
+    const projectCategorySelect = document.getElementById("project-category");
 
     // Add an event listener to the select element to stop event propagation,
     //  otherwise it closes the modal when click on an option on mozzilla
@@ -321,6 +321,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const modalAddForm = document.getElementById("modal-add-form");
     const validatingButton = document.getElementById('validating-button');
 
+
     modalAddForm.addEventListener("input", function checkForm() {
         // Get all input and select elements within the form
         const inputs = document.querySelectorAll('#modal-add-form input, #modal-add-form select');
@@ -339,6 +340,49 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
+    function mapCategoryValue(categoryValue) {
+        switch (categoryValue) {
+            case 'Objets':
+                return 1;
+            case 'Appartements':
+                return 2;
+            case 'Hotels & Restaurants':
+                return 3;
+            default:
+                return 0;
+        }
+    }
+
+    modalAddForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get form values
+        const photoInput = document.getElementById('photo');
+        const titleInput = document.getElementById('title');
+        const categoryInput = document.getElementById('project-category');
+
+        const photoFile = photoInput.files[0];
+        const title = titleInput.value;
+        const category = mapCategoryValue(categoryInput.value);
+
+        // Create FormData object to send the file and other data
+        const formData = new FormData();
+        formData.append('image', photoFile);
+        formData.append('title', title);
+        formData.append('category', category);
+
+        // Make a request to the API
+        fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: formData,
+        })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
 
 
 });
