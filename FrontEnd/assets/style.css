@@ -215,6 +215,11 @@ nav ul {
 
 }
 
+.logo-insta>a {
+	display: grid;
+	place-content: center;
+}
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
@@ -616,10 +621,6 @@ nav>ul>li>a:hover>svg {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 10px;
-	}
-
-	.logo-insta {
-		margin: auto;
 	}
 
 	#introduction {
