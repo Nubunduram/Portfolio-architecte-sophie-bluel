@@ -176,6 +176,16 @@ section {
 	margin: 50px 0
 }
 
+input[type="submit"] {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	margin: 2em auto;
+	text-align: center;
+	border-radius: 60px;
+	padding: 10px 50px;
+}
+
 h1>a {
 	display: flex;
 	flex-direction: column;
@@ -326,15 +336,6 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"] {
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	margin: 2em auto;
-	text-align: center;
-	border-radius: 60px;
-}
-
 #add-picture,
 #mail-send-button,
 #connect-button {
@@ -397,21 +398,17 @@ footer {
 	align-items: center;
 	margin-bottom: 3rem;
 	gap: 2rem;
-	position: relative;
-}
-
-.project-modify-container>button {
-	position: absolute;
-	right: 29%;
 }
 
 /* modal */
 
 dialog {
-	padding: 28px;
+	padding: clamp(0%, 28px, 5%);
 	border: none;
 	border-radius: 10px;
 	text-align: center;
+	max-width: 574px;
+	width: 88%;
 }
 
 .closing-modal-button-container {
@@ -431,16 +428,21 @@ dialog>p {
 
 .modal-grid {
 	display: grid;
-	margin: 0 45px;
+	margin: 0 auto;
 	grid-template-columns: repeat(5, 1fr);
-	width: 430px;
+	max-width: 420px;
+	width: min-content;
 	column-gap: 6px;
 	row-gap: 30px;
 }
 
+.adding-modal {
+	width: 90%;
+}
+
 .modal-add-form {
-	margin: 0 105px;
-	width: 420px;
+	margin: 0 auto;
+	width: clamp(240px, 420px, 75%);
 }
 
 .picture-input-container {
@@ -529,8 +531,8 @@ input[type="file"] {
 
 .modal-img-container {
 	position: relative;
-	width: 80px;
-	height: 102px;
+	width: clamp(10px, 79.2px, 15dvw);
+	max-height: 102px;
 }
 
 .modal-img-container>img {
@@ -550,12 +552,10 @@ input[type="file"] {
 
 .modal-hr {
 	margin-top: 4rem;
-	width: 430px;
+	max-width: 420px;
 }
 
-input[type="submit"] {
-	padding: 10px 50px;
-}
+
 
 dialog::backdrop {
 	background-color: rgba(0, 0, 0, 0.3);
@@ -566,20 +566,31 @@ dialog::backdrop {
 }
 
 /* Modifier + SVG buttton, hover */
-.project-modify-container>button>svg {
+#h2-and-modify {
+	position: relative;
+}
+
+#h2-and-modify>button {
+	position: absolute;
+	top: 50%;
+	left: calc(100% + 30px);
+	transform: translate(0%, -50%);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+#h2-and-modify>button>svg {
 	fill: black;
 }
 
-.project-modify-container>button:hover>svg {
+#h2-and-modify>button:hover>svg {
 	fill: #B1663C;
 }
 
-.project-modify-container>button:hover {
+#h2-and-modify>button:hover {
 	color: #B1663C;
 }
-
-
-
 
 /* UL Links Details */
 .bold {
@@ -592,4 +603,65 @@ nav>ul>li>a>svg {
 
 nav>ul>li>a:hover>svg {
 	fill: #B1663C;
+}
+
+@media only screen and (max-width: 600px) {
+
+
+	header {
+		margin: 2rem 0;
+	}
+
+	nav>ul {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+	}
+
+	.logo-insta {
+		margin: auto;
+	}
+
+	#introduction {
+		flex-direction: column;
+		margin: 0;
+	}
+
+	#introduction>figure>img {
+		margin: 0;
+		width: 100%;
+	}
+
+	#introduction>article {
+		margin: 1rem;
+	}
+
+	#portfolio {
+		margin-top: 1rem;
+	}
+
+	#h2-and-modify {
+		display: grid;
+		gap: 1rem;
+	}
+
+	#h2-and-modify>button {
+		position: initial;
+		display: initial;
+		transform: initial;
+	}
+
+	.project-modify-container,
+	.filters-container {
+		margin-bottom: 1rem;
+	}
+
+	#contact {
+		width: 66%;
+	}
+
+	#login-page-main {
+		width: 75%;
+	}
+
 }
