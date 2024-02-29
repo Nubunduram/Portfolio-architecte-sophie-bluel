@@ -48,7 +48,7 @@
 			</article>
 		</div>
 		<section id="portfolio">
-			<dialog class="modal" id="modal">
+			<dialog class="deleting-modal" id="deleting-modal">
 				<div class="closing-modal-button-container">
 					<button class="closing-modal-button">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@
 				</div>
 				<p>Ajout Photo</p>
 				<form class="modal-add-form" id="modal-add-form" method="post">
-					<div class="picture-input-container">
+					<div class="picture-input-container" id="picture-input-container">
 						<svg class="to-hide" xmlns="http://www.w3.org/2000/svg" width="76" height="76"
 							viewBox="0 0 76 76" fill="none">
 							<path
@@ -111,7 +111,7 @@
 			<div class="project-modify-container">
 				<h2 id="h2-and-modify">Mes Projets</h2>
 			</div>
-			<div class="filters-container">
+			<div class="filters-container" id="filters-container">
 			</div>
 			<div class="gallery" id="gallery">
 			</div>
@@ -121,9 +121,9 @@
 			<p>Vous avez un projet ? Discutons-en !</p>
 			<form action="#">
 				<label for="name">Nom</label>
-				<input type="text" name="name" id="name">
+				<input autocomplete="name" type="text" name="name" id="name">
 				<label for="email">E-mail</label>
-				<input type="email" name="email" id="email">
+				<input autocomplete="email" type="email" name="email" id="email">
 				<label for="message">Message</label>
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
 				<input id="mail-send-button" type="submit" value="Envoyer">

@@ -1,6 +1,44 @@
 document.addEventListener("DOMContentLoaded", async function () {
+
+    // Get The Connection Token in the storage if there's one
     const token = sessionStorage.getItem("token");
+    // Login/Logout link to apply the right text depending of if user is connected or not
     const loginLogoutLink = document.getElementById("login-logout-link");
+    // API base url
+    const apiWorksURL = "http://localhost:5678/api/works";
+    // The Project Galery To display all works
+    const gallery = document.getElementById("gallery");
+    // The modal Grid is the galery in the modal to delete one in editor mode
+    const modalGrid = document.getElementById("modal-grid");
+    // Container to Add the filters for the projects in the gallery
+    const filtersContainer = document.getElementById('filters-container');
+    // The deleting project modal in editor mode
+    const deletingModal = document.getElementById("deleting-modal");
+    // The adding project modal in editor mode
+    const addingModal = document.getElementById("adding-modal");
+    // The cross buttons to close the modals 
+    const closingModalButtons = document.querySelectorAll(".closing-modal-button");
+    // The button to go from the deleting moda to the adding-modal
+    const addPicture = document.getElementById("add-picture");
+    // The button to go back from adding modal to deleting modal
+    const returnButton = document.getElementById("adding-modal-return-button");
+    // The select category input, to remove the propagation from clicking outside the modal => closes the modal
+    // other wise selecting an option in the form on Mozilla closes the modal
+    const projectCategorySelect = document.getElementById("project-category");
+    // Get the file input element
+    const fileInput = document.getElementById('photo');
+    // Get the preview container element
+    const previewContainer = document.getElementById('picture-input-container');
+    // Select All the Elements to hide when the preview-img appears on screen in the adding modal
+    const addPictureButtons = document.querySelectorAll('.to-hide')
+    // The form of the adding-modal
+    const modalAddForm = document.getElementById("modal-add-form");
+    // The button to add a project
+    const validatingButton = document.getElementById('validating-button');
+    // Create the preview img element for the input when adding a new project
+    const previewImage = document.createElement('img');
+    previewImage.id = 'preview-image';
+    previewImage.alt = 'Preview Image';
 
 
     // Check if user is connected & display the right content
@@ -34,6 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const projectModifyContainer = document.querySelector(".project-modify-container");
         const h2AndModify = document.getElementById("h2-and-modify")
 
+
         if (projectModifyContainer) {
             // Create new paragraph element with the SVG content
             const svgParagraph = document.createElement("button");
@@ -42,14 +81,15 @@ document.addEventListener("DOMContentLoaded", async function () {
             // Append the new paragraph to the project-modify-container
             h2AndModify.appendChild(svgParagraph);
             svgParagraph.addEventListener("click", function () {
-                modal.showModal();
+                deletingModal.showModal();
             })
         }
 
         // Change login link to logout
         loginLogoutLink.textContent = "logout";
+        // On logout click =>
         loginLogoutLink.addEventListener("click", function () {
-            // Clear the token
+            // Remove the token from storage
             sessionStorage.removeItem("token");
 
             // Reload the page to reflect changes
@@ -57,18 +97,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     } else {
         // User is not connected
+        // Display the LoginLogout button as Login
         loginLogoutLink.textContent = "login";
+        // add the href to the login page on click
         loginLogoutLink.href = "login.html";
     }
 
 
-    // Gallery & Filters
-
-    const apiWorksURL = "http://localhost:5678/api/works";
-    const gallery = document.getElementById("gallery");
-    const modalGrid = document.getElementById("modal-grid");
-    const filtersContainer = document.querySelector('.filters-container');
-
+    // Get All Works Objects from DB
     async function getAllWorks() {
         try {
             const response = await fetch(apiWorksURL);
@@ -80,39 +116,45 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error('Error:', error);
         }
     }
-
+    // Create Projects Elements Required
     function createWorkElement(work) {
-        // For the Gallery
+        // Create the Work Element for the Gallery
         const figure = document.createElement("figure");
-        const img = document.createElement("img");
-        const figcaption = document.createElement("figcaption");
 
+        const img = document.createElement("img");
         img.src = work.imageUrl;
         img.alt = work.title;
+
+        const figcaption = document.createElement("figcaption");
         figcaption.textContent = work.title;
 
         figure.appendChild(img);
         figure.appendChild(figcaption);
 
+        // Create a copy of the image element to use in the Editor mode
         const imgCopy = img.cloneNode(true);
 
         // For the Editor
+        // Create the modal-img-container for the editor grid
         const div = document.createElement("div");
         div.classList.add("modal-img-container");
 
+        // Create the deleting button for the modal-img-container
         const button = document.createElement("button");
         button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="9" height="11" viewBox="0 0 9 11" fill="none"> <path d="M2.71607 0.35558C2.82455 0.136607 3.04754 0 3.29063 0H5.70938C5.95246 0 6.17545 0.136607 6.28393 0.35558L6.42857 0.642857H8.35714C8.71272 0.642857 9 0.930134 9 1.28571C9 1.64129 8.71272 1.92857 8.35714 1.92857H0.642857C0.287277 1.92857 0 1.64129 0 1.28571C0 0.930134 0.287277 0.642857 0.642857 0.642857H2.57143L2.71607 0.35558ZM0.642857 2.57143H8.35714V9C8.35714 9.70915 7.78058 10.2857 7.07143 10.2857H1.92857C1.21942 10.2857 0.642857 9.70915 0.642857 9V2.57143ZM2.57143 3.85714C2.39464 3.85714 2.25 4.00179 2.25 4.17857V8.67857C2.25 8.85536 2.39464 9 2.57143 9C2.74821 9 2.89286 8.85536 2.89286 8.67857V4.17857C2.89286 4.00179 2.74821 3.85714 2.57143 3.85714ZM4.5 3.85714C4.32321 3.85714 4.17857 4.00179 4.17857 4.17857V8.67857C4.17857 8.85536 4.32321 9 4.5 9C4.67679 9 4.82143 8.85536 4.82143 8.67857V4.17857C4.82143 4.00179 4.67679 3.85714 4.5 3.85714ZM6.42857 3.85714C6.25179 3.85714 6.10714 4.00179 6.10714 4.17857V8.67857C6.10714 8.85536 6.25179 9 6.42857 9C6.60536 9 6.75 8.85536 6.75 8.67857V4.17857C6.75 4.00179 6.60536 3.85714 6.42857 3.85714Z" fill="white" /></svg>';
         button.classList.add('delete-button');
 
+        // Add the ID of the work to the button dataset for it to know what project to delete later
         const workId = work.id;
         button.dataset.workId = workId;
 
+        // Add the Deleting method to the button of the project
         button.addEventListener('click', async function (event) {
             event.preventDefault();
 
             try {
                 // Make a request to delete the project with the corresponding ID
-                const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+                const response = await fetch(`${apiWorksURL}/${workId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -131,21 +173,28 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
 
+        // Assemble the Div Img Copied & the delete button for the deleting modal grid
         div.appendChild(imgCopy);
         div.appendChild(button);
 
+        // Return The Figure Element for the Gallery & the Div for the modal Grid
         return [figure, div];
     }
 
+    // Display Works in Galery & Modal Grid
     function displayWorks(works, categoryName) {
+        // Clear The Gallery & the Modal Grid
         gallery.innerHTML = '';
         modalGrid.innerHTML = '';
 
+        // For Each Work Project
         works.forEach(work => {
             if (categoryName === 'Tous' || work.category.name === categoryName) {
+                // Takes the Work Figure & The Work Div
                 const workFigure = createWorkElement(work)[0];
                 const workDiv = createWorkElement(work)[1];
 
+                // Add the Work Figure to the Gallery & Add the Work Div to the Modal Grid
                 gallery.appendChild(workFigure);
                 modalGrid.appendChild(workDiv)
 
@@ -153,93 +202,116 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 
+    // Create Filter Buttons in Gallery
     function createFilterButtons(categories) {
+        // Clear The Filters Buttons Container
         filtersContainer.innerHTML = '';
 
+        // Create the All Button
         const allButton = document.createElement('button');
         allButton.textContent = 'Tous';
         allButton.dataset.categoryName = 'Tous';
+        // Set it the Active class to show which filter is active
         allButton.classList.add('filter-active');
+
+        // All Button On Click
         allButton.addEventListener('click', async function () {
             try {
+                // Get All Works
                 const worksData = await getAllWorks();
+                // Display All Works
                 displayWorks(worksData, 'Tous');
+                // Set the All Button as Active filter
                 setActiveButton(allButton);
             } catch (error) {
                 console.error('Error:', error);
             }
         });
+        // Add the Button All to the filters container
         filtersContainer.appendChild(allButton);
 
+        // Create a button for each Category of Projects in the DB
         categories.forEach(category => {
+            // Create a New Button
             const button = document.createElement('button');
+            // Button text = Category
             button.textContent = category;
+            // Button dataset = Category
             button.dataset.categoryName = category;
+            // On Button Click
             button.addEventListener('click', async function () {
                 try {
+                    // Get All works
                     const worksData = await getAllWorks();
+
+                    // Only display works from that Category
                     const categoryName = category;
                     displayWorks(worksData, categoryName);
+                    // Set the filter to Active
                     setActiveButton(button);
                 } catch (error) {
                     console.error('Error:', error);
                 }
             });
+            // Add The Button to the filters container
             filtersContainer.appendChild(button);
         });
     }
 
+    // Set Active Filter Button
     function setActiveButton(clickedButton) {
+
+        // Select All Filters Buttons
         const allButtons = filtersContainer.querySelectorAll('button');
+
+        // For Each button remove the "filter-active" class
         allButtons.forEach(button => {
             button.classList.remove('filter-active');
         });
+
+        // Add the Filter Active class to the clicked button
         clickedButton.classList.add('filter-active');
     }
 
+    // Set Up everything
     async function fetchCategoriesAndDisplayButtons() {
         try {
+            // Get All works
             const worksData = await getAllWorks();
+            // Get All Categories
             const categories = new Set(worksData.map(work => work.category.name));
+            // Create Filters Buttons
             createFilterButtons(categories);
+            // Display Works in Galery & Editor
             displayWorks(worksData, 'Tous');
         } catch (error) {
             console.error('Error:', error);
         }
     }
-
+    // OnLoad ->
     fetchCategoriesAndDisplayButtons();
 
-    // Modal
-
-    const modal = document.getElementById("modal");
-    const addingModal = document.getElementById("adding-modal");
-
-
-    const closingModalButtons = document.querySelectorAll(".closing-modal-button");
-
-    const addPicture = document.getElementById("add-picture");
-    const returnButton = document.getElementById("adding-modal-return-button");
-
+    // When click on Add picture button, open the Adding project Modal & close the deleting modal
     addPicture.addEventListener("click", () => {
-        modal.close();
+        deletingModal.close();
         addingModal.showModal();
     })
 
+    // Goes back to Adding picture modal, when click on the return button in the Adding Modal
     returnButton.addEventListener("click", () => {
         addingModal.close();
-        modal.showModal();
+        deletingModal.showModal();
     })
 
-
-
+    // Give to the 2 closing modal buttons the listener to close the modal
     closingModalButtons.forEach(button => {
         button.addEventListener("click", () => {
-            modal.close();
+            deletingModal.close();
             addingModal.close();
         });
     });
 
+    // Function to close if click outside of a modal
     function closeOnOutsideClick(modal, event) {
         const dialogDimensions = modal.getBoundingClientRect();
         if (
@@ -252,41 +324,21 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-    modal.addEventListener("click", e => {
-        closeOnOutsideClick(modal, e);
+    // if click outside of the 1st modal close it
+    deletingModal.addEventListener("click", e => {
+        closeOnOutsideClick(deletingModal, e);
     });
 
+    // if click outside of the 2nd modal close it
     addingModal.addEventListener("click", e => {
         closeOnOutsideClick(addingModal, e);
     });
-
-    const projectCategorySelect = document.getElementById("project-category");
 
     // Add an event listener to the select element to stop event propagation,
     //  otherwise it closes the modal when click on an option on mozzilla
     projectCategorySelect.addEventListener("click", (e) => {
         e.stopPropagation();
     });
-
-    // IMG preview 
-    // Get the file input element
-    const fileInput = document.getElementById('photo');
-    // Get the preview container element
-    const previewContainer = document.querySelector('.picture-input-container');
-
-    const addPictureButtons = document.querySelectorAll('.to-hide')
-
-    closingModalButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            modal.close();
-            addingModal.close();
-        });
-    });
-
-    // Create a new img element
-    const previewImage = document.createElement('img');
-    previewImage.id = 'preview-image';
-    previewImage.alt = 'Preview Image';
 
     // Add an event listener to the file input
     fileInput.addEventListener('change', function () {
@@ -313,17 +365,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // Read the selected file as a data URL
             reader.readAsDataURL(selectedFile);
-        } else {
-            // If no file is selected, you can handle this case (e.g., display a default image)
-            previewImage.src = '#';
         }
     });
 
-    // Change  the validating button if the form is filled or not
-    const modalAddForm = document.getElementById("modal-add-form");
-    const validatingButton = document.getElementById('validating-button');
-
-
+    // On input in modal Form, Check if all input are filled, if so let the add project button be active
+    // If not the button will not be clickable and the background color will be gray
     modalAddForm.addEventListener("input", function checkForm() {
         // Get all input and select elements within the form
         const inputs = document.querySelectorAll('#modal-add-form input, #modal-add-form select');
@@ -342,6 +388,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
+    // The Categories in the Backend are Numbers
+    // Map The Numbers to Their Category Name
     function mapCategoryValue(categoryValue) {
         switch (categoryValue) {
             case 'Objets':
@@ -355,6 +403,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
+    // Handle the Add new Project Form
     modalAddForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -363,8 +412,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         const titleInput = document.getElementById('title');
         const categoryInput = document.getElementById('project-category');
 
+        // Get The Picture Input
         const photoFile = photoInput.files[0];
+        // Get The Title Input
         const title = titleInput.value;
+        // Get The Number of the selected category
         const category = mapCategoryValue(categoryInput.value);
 
         // Create FormData object to send the file and other data
@@ -373,8 +425,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         formData.append('title', title);
         formData.append('category', category);
 
-        // Make a request to the API
-        fetch('http://localhost:5678/api/works', {
+        // Make a request to the API to post the new project
+        fetch(apiWorksURL, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -385,6 +437,4 @@ document.addEventListener("DOMContentLoaded", async function () {
                 console.error('Error:', error);
             });
     });
-
-
 });
