@@ -395,7 +395,10 @@ footer {
 	justify-content: center;
 	align-items: center;
 	gap: 12px;
+	fill: white;
 }
+
+
 
 .project-modify-container {
 	display: flex;
@@ -582,12 +585,13 @@ dialog::backdrop {
 	left: calc(100% + 30px);
 	transform: translate(0%, -50%);
 	display: flex;
-	align-items: center;
+	align-items: end;
 	gap: 10px;
+	color: black;
 }
 
 #h2-and-modify>button>svg {
-	fill: black;
+	padding-bottom: 2px;
 }
 
 #h2-and-modify>button:hover>svg {
