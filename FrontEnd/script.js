@@ -1,82 +1,62 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Get The Connection Token in the storage if there's one
-    const token = sessionStorage.getItem("token");
-    // Login/Logout link to apply the right text depending of if user is connected or not
-    const loginLogoutLink = document.getElementById("login-logout-link");
     // API base url
     const API_WORKS_URL = "http://localhost:5678/api/works";
-    // The Project Galery To display all works
+    // Get The Connection Token in the storage if there's one
+    const token = sessionStorage.getItem("token");
+
+    // DOM 
+
+    // The Login/Logout link to apply the right text depending of if user is connected or not
+    const loginLogoutLink = document.getElementById("login-logout-link");
+    // The main Project Galery To display all works
     const gallery = document.getElementById("gallery");
-    // The modal Grid is the galery in the modal to delete works in editor mode
-    const modalGrid = document.getElementById("modal-grid");
-    // Container to Add the filters for the projects in the gallery
+    // The Container to Add the filters for the projects in the gallery
     const filtersContainer = document.getElementById('filters-container');
-    // The deleting project modal in editor mode
+    // The "deleting project" modal in editor mode
     const deletingModal = document.getElementById("deleting-modal");
-    // The adding project modal in editor mode
+    // The "adding project" modal in editor mode
     const addingModal = document.getElementById("adding-modal");
-    // The cross buttons to close the modals 
-    const closingModalButtons = document.querySelectorAll(".closing-modal-button");
-    // The button to go from the deleting moda to the adding-modal
+    // The button to go from the deleting modal to the adding-modal
     const addPicture = document.getElementById("add-picture");
     // The button to go back from adding modal to deleting modal
     const returnButton = document.getElementById("adding-modal-return-button");
-    // The select category input, to remove the propagation from clicking outside the modal => closes the modal
-    // other wise selecting an option in the form on Mozilla closes the modal
+    // The select category element, to remove event propagation due to a bug on mozzilla
     const projectCategorySelect = document.getElementById("project-category");
-    // Get the file input element
+    // The Input button to add a Picture for new project
     const fileInput = document.getElementById('photo');
-    // Get the preview container element
+    // The container for the preview Picture in add new project form
     const previewContainer = document.getElementById('picture-input-container');
+    // The form of the adding project modal
+    const modalAddForm = document.getElementById("modal-add-form");
+    // The button to send the form of adding project
+    const validatingButton = document.getElementById('validating-button');
+
     // Select All the Elements to hide when the preview-img appears on screen in the adding modal
     const addPictureButtons = document.querySelectorAll('.to-hide')
-    // The form of the adding-modal
-    const modalAddForm = document.getElementById("modal-add-form");
-    // The button to add a project
-    const validatingButton = document.getElementById('validating-button');
-    // Create the preview img element for the input when adding a new project
-    const previewImage = document.createElement('img');
-    previewImage.id = 'preview-image';
-    previewImage.alt = 'Preview Image';
+    // Select All The cross buttons to close the modals 
+    const closingModalButtons = document.querySelectorAll(".closing-modal-button");
+
     // SVG for the editor Mode
     const editingSvg = `<svg width="17" height="17" viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M14.0229 2.18576L14.3939 2.55679C14.6821 2.84503 14.6821 3.31113 14.3939 3.5963L13.5016 4.49169L12.0879 3.07808L12.9803 2.18576C13.2685 1.89751 13.7346 1.89751 14.0198 2.18576H14.0229ZM6.93332 8.23578L11.0484 4.11759L12.4621 5.53121L8.34387 9.64633C8.25494 9.73525 8.14455 9.79964 8.02496 9.83337L6.23111 10.3455L6.7432 8.55162C6.77693 8.43203 6.84133 8.32164 6.93025 8.23271L6.93332 8.23578ZM11.9408 1.14625L5.89074 7.1932C5.62397 7.45998 5.43078 7.78808 5.32959 8.14685L4.4526 11.2133C4.379 11.4708 4.44953 11.7468 4.63965 11.9369C4.82977 12.127 5.10574 12.1976 5.36332 12.124L8.42973 11.247C8.79156 11.1427 9.11967 10.9495 9.38338 10.6858L15.4334 4.63888C16.2951 3.77722 16.2951 2.37894 15.4334 1.51728L15.0624 1.14625C14.2007 0.284585 12.8024 0.284585 11.9408 1.14625ZM3.19844 2.34214C1.70816 2.34214 0.5 3.55031 0.5 5.04058V13.3812C0.5 14.8715 1.70816 16.0796 3.19844 16.0796H11.5391C13.0293 16.0796 14.2375 14.8715 14.2375 13.3812V9.94683C14.2375 9.539 13.9094 9.21089 13.5016 9.21089C13.0937 9.21089 12.7656 9.539 12.7656 9.94683V13.3812C12.7656 14.0589 12.2167 14.6078 11.5391 14.6078H3.19844C2.52076 14.6078 1.97188 14.0589 1.97188 13.3812V5.04058C1.97188 4.36291 2.52076 3.81402 3.19844 3.81402H6.63281C7.04065 3.81402 7.36875 3.48591 7.36875 3.07808C7.36875 2.67025 7.04065 2.34214 6.63281 2.34214H3.19844Z"/></svg>`;
 
 
-    // Get All Works from DB & pass the result to the function that set up the content on the site
+    // FUNCTIONS
+
+    // Get every Works from DB & pass the result to the function that set up the content on the site
     (async () => {
         try {
             const response = await fetch(API_WORKS_URL);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            // Every Works Object from the DB
             const allWorks = await response.json();
             // Call the function to set up the content after ensuring the data is available
-            await fetchCategoriesAndDisplayButtons(allWorks);
+            fetchCategoriesAndDisplayButtons(allWorks);
         } catch (error) {
             console.error('Error:', error);
         }
     })()
-
-    // Check if user is connected & display the right content
-    if (token) {
-        // User is connected -> Add The Editor Mode
-        createEditorElements()
-        // Change login link to logout
-        loginLogoutLink.textContent = "logout";
-        // On logout click =>
-        loginLogoutLink.addEventListener("click", function () {
-            // Remove the token from storage
-            sessionStorage.removeItem("token");
-            // Reload the page to reflect changes
-            window.location.reload();
-        });
-    } else {
-        // User is not connected
-        // Display the LoginLogout button as Login
-        loginLogoutLink.textContent = "login";
-        // add the href to the login page on click
-        loginLogoutLink.href = "login.html";
-    }
 
     // Create the Editor Header for Editor Mode
     function createEditorHeader() {
@@ -176,6 +156,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Display Works in Galery & Modal Grid
     function displayWorks(allWorks, categoryName) {
+        // The modal Grid is the galery in the modal to delete works in editor mode
+        const modalGrid = document.getElementById("modal-grid");
         // Clear The Gallery & the Modal Grid
         gallery.innerHTML = '';
         modalGrid.innerHTML = '';
@@ -234,19 +216,66 @@ document.addEventListener("DOMContentLoaded", function () {
         clickedButton.classList.add('filter-active');
     }
 
-    // Set Up everything
-    async function fetchCategoriesAndDisplayButtons(allWorks) {
-        try {
-            // Get All Categories from each object and delete double
-            const categories = new Set(allWorks.map(work => work.category.name));
-            // Create Filters Buttons
-            createFilterButtons(allWorks, categories);
-            // Display Works in Galery & Editor
-            displayWorks(allWorks, 'Tous');
-        } catch (error) {
-            console.error('Error in fetchCategoriesAndDisplayButtons:', error);
+    // The Categories in the Backend are Numbers
+    // Map The Numbers to Their Category Name
+    function mapCategoryValue(categoryValue) {
+        switch (categoryValue) {
+            case 'Objets':
+                return 1;
+            case 'Appartements':
+                return 2;
+            case 'Hotels & Restaurants':
+                return 3;
+            default:
+                return 0;
         }
     }
+
+    // Function to close if click outside of a modal
+    function closeOnOutsideClick(modal, event) {
+        const dialogDimensions = modal.getBoundingClientRect();
+        if (
+            event.clientX < dialogDimensions.left ||
+            event.clientX > dialogDimensions.right ||
+            event.clientY < dialogDimensions.top ||
+            event.clientY > dialogDimensions.bottom
+        ) {
+            modal.close();
+        }
+    }
+
+    // Set Up everything
+    function fetchCategoriesAndDisplayButtons(allWorks) {
+        // Get All Categories from each object and delete double
+        const categories = new Set(allWorks.map(work => work.category.name));
+        // Create Filters Buttons
+        createFilterButtons(allWorks, categories);
+        // Display Works in Galery & Editor
+        displayWorks(allWorks, 'Tous');
+    }
+
+    // Check if user is connected & display the right content
+    if (token) {
+        // User is connected -> Add The Editor Mode
+        createEditorElements()
+        // Change login link to logout
+        loginLogoutLink.textContent = "logout";
+        // On logout click =>
+        loginLogoutLink.addEventListener("click", function () {
+            // Remove the token from storage
+            sessionStorage.removeItem("token");
+            // Reload the page to reflect changes
+            window.location.reload();
+        });
+    } else {
+        // User is not connected
+        // Display the LoginLogout button as Login
+        loginLogoutLink.textContent = "login";
+        // add the href to the login page on click
+        loginLogoutLink.href = "login.html";
+    }
+
+    // ADD EVENT LISTENERS
 
     // When click on Add picture button, open the Adding project Modal & close the deleting modal
     addPicture.addEventListener("click", () => {
@@ -268,19 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Function to close if click outside of a modal
-    function closeOnOutsideClick(modal, event) {
-        const dialogDimensions = modal.getBoundingClientRect();
-        if (
-            event.clientX < dialogDimensions.left ||
-            event.clientX > dialogDimensions.right ||
-            event.clientY < dialogDimensions.top ||
-            event.clientY > dialogDimensions.bottom
-        ) {
-            modal.close();
-        }
-    }
-
     //Add the function closeOnOutsideClick to both modals
     deletingModal.addEventListener("click", e => {
         closeOnOutsideClick(deletingModal, e);
@@ -297,6 +313,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add an event listener to the file input to show the Preview Image or the Add an img input
     fileInput.addEventListener('change', function () {
+        // Create the preview img element for the input when adding a new project
+        const previewImage = document.createElement('img');
+        previewImage.id = 'preview-image';
+        previewImage.alt = 'Preview Image';
         // Check if any file is selected
         if (fileInput.files.length > 0) {
             addPictureButtons.forEach(elementToHide => {
@@ -334,21 +354,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // The Categories in the Backend are Numbers
-    // Map The Numbers to Their Category Name
-    function mapCategoryValue(categoryValue) {
-        switch (categoryValue) {
-            case 'Objets':
-                return 1;
-            case 'Appartements':
-                return 2;
-            case 'Hotels & Restaurants':
-                return 3;
-            default:
-                return 0;
-        }
-    }
-
     // Handle the Add new Project Form
     modalAddForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -364,7 +369,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const category = mapCategoryValue(categoryInput.value);
         // Create FormData object to send the file and other data
         const formData = new FormData();
-        
+
         formData.append('image', photoFile);
         formData.append('title', title);
         formData.append('category', category);
