@@ -16,6 +16,7 @@ const editingSvg = `<svg width="17" height="17" viewBox="0 0 17 17" xmlns="http:
 // The "deleting project" modal in editor mode
 const deletingModal = document.getElementById("deleting-modal");
 
+// Export necessary var for other module
 export { API_WORKS_URL, token, deletingModal };
 
 
@@ -69,6 +70,7 @@ function createGalleryElement(allWorks) {
 
     figure.appendChild(img);
     figure.appendChild(figcaption);
+
     return figure
 }
 
@@ -121,7 +123,7 @@ function createDivModalGridElement(allWorks) {
 }
 
 // Display Works in Galery & Modal Grid
-function displayWorks(allWorks, categoryName) {
+function displayWorks(allWorks, filterCategoryName) {
     // The modal Grid is the galery in the modal to delete works in editor mode
     const modalGrid = document.getElementById("modal-grid");
     // Clear The Gallery & the Modal Grid
@@ -129,7 +131,7 @@ function displayWorks(allWorks, categoryName) {
     modalGrid.innerHTML = '';
     // For Each Work Project
     allWorks.forEach(work => {
-        if (categoryName === 'Tous' || work.category.name === categoryName) {
+        if (filterCategoryName === 'Tous' || work.category.name === filterCategoryName) {
             // Takes the Work Figure & The Work Div
             const workFigure = createGalleryElement(work);
             const workDiv = createDivModalGridElement(work);
@@ -140,33 +142,34 @@ function displayWorks(allWorks, categoryName) {
     });
 }
 
-function appendFilterButton(text, datasetCategory, allWorks) {
+// Create a filter button and add it to the filter container
+function createFilterButton(filterCategoryName, allWorks) {
     // Create the button
     const button = document.createElement('button');
-    button.textContent = text;
-    button.dataset.categoryName = datasetCategory;
+    button.textContent = filterCategoryName;
+    button.dataset.categoryName = filterCategoryName;
     // Add click event listener
     button.addEventListener('click', () => {
-        displayWorks(allWorks, datasetCategory);
+        displayWorks(allWorks, filterCategoryName);
         setActiveButton(button);
     });
     // Add the button to the filters container
     filtersContainer.appendChild(button);
     // Set "Tous" as the default active filter button
-    if (text == 'Tous') {
+    if (filterCategoryName === 'Tous') {
         button.classList.add('filter-active');
     }
 }
 
 // Create Filter Buttons in Gallery
-function createFilterButtons(allWorks, categories) {
+function addAllFilterButtons(allWorks, categories) {
     // Clear The Filters Buttons Container
     filtersContainer.innerHTML = '';
     // Create and append the "All" button
-    appendFilterButton('Tous', 'Tous', allWorks);
+    createFilterButton('Tous', allWorks);
     // Create and append buttons for each category
     categories.forEach(category => {
-        appendFilterButton(category, category, allWorks);
+        createFilterButton(category, allWorks);
     });
 }
 
@@ -187,7 +190,7 @@ function fetchCategoriesAndDisplayButtons(allWorks) {
     // Get All Categories from each object and delete double
     const categories = new Set(allWorks.map(work => work.category.name));
     // Create Filters Buttons
-    createFilterButtons(allWorks, categories);
+    addAllFilterButtons(allWorks, categories);
     // Display Works in Galery & Editor
     displayWorks(allWorks, 'Tous');
 }
@@ -226,10 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.reload();
         });
     } else {
-        // User is not connected
-        // Display the LoginLogout button as Login
+        // User is not connected -> Display the LoginLogout button as Login
         loginLogoutLink.textContent = "login";
-        // add the href to the login page on click
-        loginLogoutLink.href = "login.html";
     }
 });
