@@ -186,7 +186,7 @@ function setActiveButton(clickedButton) {
 }
 
 // Set Up everything
-function fetchCategoriesAndDisplayButtons(allWorks) {
+function updateContent(allWorks) {
     // Get All Categories from each object and delete double
     const categories = new Set(allWorks.map(work => work.category.name));
     // Create Filters Buttons
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Every Works Object from the DB
             const allWorks = await response.json();
             // Call the function to set up the content after ensuring the data is available
-            fetchCategoriesAndDisplayButtons(allWorks);
+            updateContent(allWorks);
         } catch (error) {
             console.error('Error:', error);
         }
