@@ -158,7 +158,7 @@ modalAddForm.addEventListener('submit', function (event) {
     formData.append('title', title);
     formData.append('category', category);
     // Make a request to the API to post the new project
-    fetch(API_WORKS_URL, {
+    fetch(`${API_WORKS_URL}/works/`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
