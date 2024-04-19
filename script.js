@@ -1,5 +1,5 @@
 // API base url
-const API_WORKS_URL = "http://localhost:5678/api/works";
+const API_WORKS_URL = "https://architect-portfolio-d7d63552eceb.herokuapp.com/api/works";
 // Get The Connection Token in the storage if there's one
 const token = sessionStorage.getItem("token");
 
