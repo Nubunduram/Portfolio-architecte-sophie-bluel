@@ -1,5 +1,3 @@
-// import { API_WORKS_URL } from "./script.js";
-
 document.addEventListener("DOMContentLoaded", function () {
     // Login Form
     const loginForm = document.getElementById("loginForm");
