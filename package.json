@@ -1,0 +1,9 @@
+{
+  "homepage": "https://Nubunduram.github.io/portfolio-architecte-sophie-bluel",
+  "dependencies": {
+    "gh-pages": "^6.1.1"
+  },
+  "scripts": {
+    "deploy": "gh-pages -d frontend -t true"
+  }
+}
