@@ -1,5 +1,5 @@
 // API base url
-const API_WORKS_URL = "https://architect-portfolio-d7d63552eceb.herokuapp.com/api/works";
+const API_WORKS_URL = "https://architect-portfolio-d7d63552eceb.herokuapp.com/api";
 // Get The Connection Token in the storage if there's one
 const token = sessionStorage.getItem("token");
 
@@ -80,7 +80,7 @@ async function deleteProject(e, workId) {
 
     try {
         // Make a request to delete the project with the corresponding ID
-        const response = await fetch(`${API_WORKS_URL}/${workId}`, {
+        const response = await fetch(`${API_WORKS_URL}/works/${workId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get every Works from DB & pass the result to the function that set up the content on the site
     (async () => {
         try {
-            const response = await fetch(API_WORKS_URL);
+            const response = await fetch(`${API_WORKS_URL}/works/`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

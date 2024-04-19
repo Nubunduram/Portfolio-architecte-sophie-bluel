@@ -1,3 +1,5 @@
+import { API_WORKS_URL } from "./script.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     // Login Form
     const loginForm = document.getElementById("loginForm");
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if correct
         try {
-            const response = await fetch("http://localhost:5678/api/users/login", {
+            const response = await fetch(`${API_WORKS_URL}/users/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // if it works get the result
             const result = await response.json();
-            
+
             // get the connection token from the result 
             const token = result.token;
 
