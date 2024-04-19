@@ -165,6 +165,13 @@ modalAddForm.addEventListener('submit', function (event) {
         },
         body: formData,
     })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            // Reload the page after successful submission
+            window.location.reload();
+        })
         .catch(error => {
             console.error('Error:', error);
         });
