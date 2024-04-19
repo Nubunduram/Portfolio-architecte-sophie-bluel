@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if correct
         try {
-            const response = await fetch(`${API_WORKS_URL}/users/login`, {
+            const response = await fetch(`https://architect-portfolio-d7d63552eceb.herokuapp.com/api/users/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
