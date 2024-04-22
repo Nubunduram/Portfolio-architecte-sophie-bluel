@@ -157,6 +157,7 @@ modalAddForm.addEventListener('submit', function (event) {
     formData.append('image', photoFile);
     formData.append('title', title);
     formData.append('category', category);
+
     // Make a request to the API to post the new project
     fetch(`${API_WORKS_URL}/works/`, {
         method: 'POST',
@@ -167,6 +168,7 @@ modalAddForm.addEventListener('submit', function (event) {
     })
         .then(response => {
             if (!response.ok) {
+
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             // Reload the page after successful submission

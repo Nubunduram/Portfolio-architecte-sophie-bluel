@@ -1,5 +1,6 @@
 // API base url
 const API_WORKS_URL = "https://architect-portfolio-d7d63552eceb.herokuapp.com/api";
+
 // Get The Connection Token in the storage if there's one
 const token = sessionStorage.getItem("token");
 
@@ -212,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             // Every Works Object from the DB
             const allWorks = await response.json();
+            console.log(allWorks)
             // Call the function to set up the content after ensuring the data is available
             updateContent(allWorks);
         } catch (error) {
