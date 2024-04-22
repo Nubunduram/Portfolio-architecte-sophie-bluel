@@ -141,6 +141,8 @@ modalAddForm.addEventListener("input", function checkForm() {
 // Handle the Add new Project Form
 modalAddForm.addEventListener('submit', function (event) {
     event.preventDefault();
+
+    addingModal.close();
     // Get form values
     const photoInput = document.getElementById('photo');
     const titleInput = document.getElementById('title');
