@@ -213,7 +213,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             // Every Works Object from the DB
             const allWorks = await response.json();
-            console.log(allWorks)
             // Call the function to set up the content after ensuring the data is available
             updateContent(allWorks);
         } catch (error) {
