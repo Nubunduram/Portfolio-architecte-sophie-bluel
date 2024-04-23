@@ -472,10 +472,14 @@ dialog::backdrop {
 
 @media only screen and (width <=580px) {
 
-	header>nav>ul {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--small-gap);
+	header ul {
+		gap: var(--big-gap);
+		margin-left: var(--big-gap);
+	}
+
+	header li:first-child,
+	li:nth-child(2) {
+		display: none;
 	}
 }
 
