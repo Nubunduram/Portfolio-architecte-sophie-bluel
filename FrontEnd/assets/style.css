@@ -66,6 +66,16 @@ a:hover>* {
 	fill: var(--default-brown);
 }
 
+input[type="submit"] {
+	font-family: var(--special-font);
+	font-weight: var(--bold-font);
+	color: var(--default-white);
+	margin: var(--big-gap) auto;
+	text-align: center;
+	border-radius: var(--big-radius);
+	padding: var(--small-gap) var(--big-gap);
+}
+
 body {
 	background: var(--dark-white);
 	font-family: 'Work Sans';
@@ -73,6 +83,12 @@ body {
 	flex-direction: column;
 	min-height: 100dvh;
 }
+
+section {
+	margin: var(--big-gap) auto;
+}
+
+/* Header */
 
 header,
 main {
@@ -88,19 +104,33 @@ header {
 	margin: var(--gap) auto;
 }
 
-section {
-	margin: var(--big-gap) auto;
+header>nav>ul {
+	display: flex;
+	font-size: 1.2em;
+	gap: var(--gap);
 }
 
-input[type="submit"] {
-	font-family: var(--special-font);
-	font-weight: var(--bold-font);
-	color: var(--default-white);
-	margin: var(--big-gap) auto;
-	text-align: center;
-	border-radius: var(--big-radius);
-	padding: var(--small-gap) var(--big-gap);
+.logo-insta>a {
+	display: grid;
+	place-items: center;
 }
+
+/* Footer */
+
+footer {
+	background-color: var(--default-white);
+	text-align: end;
+	margin-top: var(--big-gap);
+	padding: var(--big-gap);
+}
+
+footer>nav {
+	max-width: 1140px;
+	width: 90%;
+	margin: auto;
+}
+
+/* Logo */
 
 h1 {
 	font-size: 1.375em;
@@ -119,24 +149,16 @@ h1>a>span {
 	letter-spacing: 0.1em;
 }
 
+
+/* Section Titles */
 h2 {
 	font-family: var(--special-font);
 	font-weight: var(--bold-font);
 	font-size: 1.875em;
 	color: var(--default-green);
-	margin-bottom: var(--gap);
 }
 
-header>nav>ul {
-	display: flex;
-	font-size: 1.2em;
-	gap: var(--gap);
-}
-
-.logo-insta>a {
-	display: grid;
-	place-items: center;
-}
+/* Introduction Section */
 
 #introduction {
 	display: flex;
@@ -158,12 +180,14 @@ header>nav>ul {
 	margin: 1em 0;
 }
 
-.filters-container {
+/* Portfolio Section */
+
+#portfolio .filters-container {
 	text-align: center;
 	margin-bottom: var(--big-gap);
 }
 
-.filters-container>* {
+#portfolio .filters-container>* {
 	color: var(--default-green);
 	margin: 4px;
 	padding: var(--small-gap) var(--gap);
@@ -175,26 +199,28 @@ header>nav>ul {
 	transition: 0.25s;
 }
 
-.filters-container button:hover {
+#portfolio .filters-container button:hover {
 	transform: scale(1.05);
 }
 
-.filter-active {
+#portfolio .filter-active {
 	background: var(--default-green);
 	color: var(--dark-white);
 }
 
-.gallery {
+#portfolio .gallery {
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: var(--gap);
 }
 
-.gallery img {
+#portfolio .gallery img {
 	width: 100%;
 	object-fit: cover;
 }
+
+/* Contact Section & Login Page */
 
 #contact,
 #login-page-main {
@@ -229,7 +255,6 @@ header>nav>ul {
 	margin-bottom: var(--gap);
 }
 
-#add-picture,
 #mail-send-button,
 #connect-button {
 	background-color: var(--default-green);
@@ -247,17 +272,8 @@ header>nav>ul {
 	flex-grow: 1;
 }
 
-footer {
-	background-color: var(--default-white);
-	text-align: end;
-	margin-top: var(--big-gap);
-	padding: var(--big-gap);
-}
-
-footer>nav {
-	max-width: 1140px;
-	width: 90%;
-	margin: auto;
+#login-page-main h2 {
+	margin-bottom: var(--big-gap);
 }
 
 #forgoten-link {
@@ -282,7 +298,7 @@ footer>nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: var(--big-gap);
+	margin-bottom: var(--gap);
 	gap: var(--gap);
 }
 
