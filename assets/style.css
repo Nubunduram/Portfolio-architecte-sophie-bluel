@@ -7,9 +7,6 @@ html,
 body,
 div,
 span,
-applet,
-object,
-iframe,
 h1,
 h2,
 h3,
@@ -17,74 +14,24 @@ h4,
 h5,
 h6,
 p,
-blockquote,
-pre,
 a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
 img,
-ins,
-kbd,
 q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
 i,
-center,
-dl,
-dt,
-dd,
 ol,
 ul,
 li,
-fieldset,
 form,
 label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
 article,
 aside,
-canvas,
-details,
-embed,
 figure,
 figcaption,
 footer,
 header,
-hgroup,
-menu,
 nav,
-output,
-ruby,
 section,
-summary,
-time,
-mark,
-audio,
-video,
-input[type="submit"] {
+input {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -301,7 +248,7 @@ li:hover {
 
 #contact,
 #login-page-main {
-	width: 33%;
+	width: 500px;
 	margin: auto;
 }
 
@@ -367,7 +314,7 @@ footer nav ul {
 }
 
 footer {
-	margin-top: auto;
+	margin-top: 32px;
 }
 
 #login-page-main h2 {
@@ -617,7 +564,6 @@ nav>ul>li>a:hover>svg {
 
 @media only screen and (max-width: 600px) {
 
-
 	header {
 		margin: 2rem 0;
 	}
@@ -670,4 +616,34 @@ nav>ul>li>a:hover>svg {
 		width: 75%;
 	}
 
+	#pop {
+		font-size: 12px;
+	}
+}
+
+
+#pop {
+	display: flex;
+	text-align: initial;
+	margin: auto;
+	justify-content: space-between;
+}
+
+#pop .pop-infos {
+	border: solid 2px rgb(29, 97, 84);
+	border-radius: 10px;
+	width: 35%;
+	padding: 16px;
+	word-wrap: break-word;
+}
+
+.pop-infos p:first-child {
+	padding-bottom: 16px;
+}
+
+#pop .pop-text {
+	border: solid 2px rgb(29, 97, 84);
+	border-radius: 10px;
+	width: 35%;
+	padding: 16px;
 }
