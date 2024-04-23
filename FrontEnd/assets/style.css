@@ -254,6 +254,12 @@ footer {
 	padding: var(--big-gap);
 }
 
+footer>nav {
+	max-width: 1140px;
+	width: 90%;
+	margin: auto;
+}
+
 #forgoten-link {
 	text-decoration: underline;
 }
