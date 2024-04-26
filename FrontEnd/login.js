@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if correct
         try {
-            const response = await fetch(localApi, {
+            const response = await fetch(productionApi, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

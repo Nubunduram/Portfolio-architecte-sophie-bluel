@@ -1,5 +1,5 @@
 // API base url
-const API_WORKS_URL = "http://localhost:5678/api";
+const API_WORKS_URL = "https://architect-portfolio-d7d63552eceb.herokuapp.com/api";
 // const API_WORKS_URL_DEV = "http://localhost:5678/api";
 // const API_WORKS_URL_PROD = "https://architect-portfolio-d7d63552eceb.herokuapp.com/api";
 
