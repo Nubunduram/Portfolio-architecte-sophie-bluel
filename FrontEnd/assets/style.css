@@ -66,6 +66,7 @@ a:hover>* {
 }
 
 input[type="submit"] {
+	font-size: 0.875em;
 	font-family: var(--special-font);
 	font-weight: var(--bold-font);
 	color: var(--default-white);
@@ -73,6 +74,7 @@ input[type="submit"] {
 	text-align: center;
 	border-radius: var(--big-radius);
 	padding: var(--small-gap) var(--big-gap);
+	min-width: 180px;
 }
 
 body {
@@ -239,14 +241,18 @@ h2 {
 	margin-top: var(--gap);
 }
 
-#contact input,
-#login-page-main input,
+#contact input[type="email"],
+#contact input[type="text"],
+#login-page-main input[type="email"],
+#login-page-main input[type="password"],
 #contact textarea,
 #login-page-main textarea {
 	min-height: 34px;
 	font-size: 1.2em;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
 }
+
+
 
 #contact label,
 #login-page-main label {
@@ -255,7 +261,8 @@ h2 {
 }
 
 #mail-send-button,
-#connect-button {
+#connect-button,
+#add-picture {
 	background-color: var(--default-green);
 }
 
