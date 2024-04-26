@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Login Form
     const loginForm = document.getElementById("loginForm");
+    const productionApi = `https://architect-portfolio-d7d63552eceb.herokuapp.com/api/users/login`;
+    const localApi = `http://localhost:5678/api/users/login`;
 
     // When login form submit ->
     loginForm.addEventListener("submit", async function (event) {
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if correct
         try {
-            const response = await fetch(`https://architect-portfolio-d7d63552eceb.herokuapp.com/api/users/login`, {
+            const response = await fetch(localApi, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
